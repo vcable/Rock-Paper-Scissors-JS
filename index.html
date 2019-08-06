@@ -2,93 +2,42 @@
 
 <head>
     <script>
-       /* //Scorekeeping
-        let playerScore = 0
-        let computerScore = 0
-        let ties = 0*/
-        
-        //User choice
-        let playerTurn = prompt("Rock, paper, or scissors???")
-                     
-        
-        
-
-        //The computer's turn *selects random option from array*
-        let computerTurn = Math.random();
-        if (computerTurn < 0.34) {
-            computerTurn = "Rock";
-        } else if (computerTurn <=0.67) {
-            computerTurn = "Paper";
+        //Comoputer choice
+         let computerChoice = Math.random();
+        if (computerChoice < 0.34) {
+            computerChoice = "rock";
+        } else if(computerChoice <= 0.67) {
+            computerChoice = "paper";
         } else {
-            computerTurn = "Scissors";
-        }
-
-        //Compares player input to computer selection
-        function compare(playerSelection, computerSelection) {
-
-            
-            let playerWin = "Player wins! " + playerTurn + " beats " + computerTurn + "!"
-            let computerWin = "Computer wins! " + computerTurn + " beats " + playerTurn + "!"
-            let drawMessage = "Draw!"
-
-            //Tests for draw
-            if (playerTurn === computerTurn) {
-                return drawMessage;
-                ties++;
-            }
-            
-            
-            if (playerTurn === "Rock") {
-                if (computerTurn === "Scissors") {
-                    return playerWin;
-                    playerScore++;
-                } else {
-                    return computerWin;
-                    computerScore++;
-                }
-
-            }
-            if (playerTurn === "Paper") {
-                if (computerTurn === "Rock") {
-                    return playerWin;
-                    playerScore++;
-                } else {
-                    return computerWin;
-                    computerScore++;
-                }
-            }
-            if (playerTurn === "Scissors") {
-                if (computerTurn === "Paper") {
-                    return playerWin;
-                    playerScore++;
-                } else {
-                    return computerWin;
-                    computerScore++;
-                }
-            }
-           
+            computerChoice = "scissors";
         }
         
-       //Prints results of the compare function
-        let results = compare()
+        let playerChoice = prompt("Rock, paper, or scissors?").toLowerCase()
+        
+        
+         function playRound(playerChoice, computerChoice) {
+            if (playerChoice === computerChoice) {
+                return "Draw!"
+            } else if (playerChoice === "rock" && computerChoice === "scissors") {
+                return "Player wins!"
+            } else if (playerChoice === "paper" && computerChoice === "rock") {
+                return "Player wins!"
+            } else if (playerChoice === "scissors" && computerChoice === "paper") {
+                return "Player wins!"
+            } else {
+                return "Computer wins!"
+            }
+        }
+        
+        let results = playRound(playerChoice, computerChoice)
         console.log(results)
+    
 
-        
-        //Shows current scores
-        /*function printScores() {
-            console.log("The player's current score is: " + playerScore + "!")
-            console.log("The computer's current score is: " + computerScore + "!")
-            console.log("The current number of ties is: " + ties + "!")
-        }
-        printScores()*/
-        
-        
     </script>
 </head>
 
 <body>
     <h1>Rock Paper Scissors (in the console :))</h1>
 </body>
-
 
 </html>
