@@ -1,95 +1,132 @@
-<html>
+<!DOCTYPE html>
+<html class="html">
 
 <head>
-    <script>
-        let playerScore = 0;
-        let computerScore = 0;
-        let draws = 0;
-
-        //Computer choice
-        function computerPlay() {
-            let random = Math.random();
-            if (random <= 0.3333) {
-                return "paper";
-            } else if (random >= 0.6666) {
-                return "rock";
-            } else {
-                return "scissors";
-            }
-        }
-
-        //Plays one round of RPS
-        function playRound(playerChoice, computerSelection) {
-            if (playerChoice === computerSelection) {
-                return draw;
-            } else if (playerChoice === "rock" && computerSelection === "scissors") {
-                return playerWinRound;
-
-            } else if (playerChoice === "paper" && computerSelection === "rock") {
-                return playerWinRound;
-
-            } else if (playerChoice === "scissors" && computerSelection === "paper") {
-                return playerWinRound;
-
-            } else {
-                return computerWinRound;
-
-            }
-        }
-
-        //Specifies round win/game win messages
-        let playerWinRound = "Player wins this round!"
-        let computerWinRound = "Computer wins this round!"
-        let draw = "Draw!"
-        let playerWin = "Player wins the game! Congratulations!"
-        let computerWin = "Computer wins the game! Congratulations!"
-
-
-        //For loop that plays multiple rounds
-        for (let i = 0; i < 1000; i++) {
-            let playerChoice = prompt("Rock, paper, or scissors?").toLowerCase();
-            const computerSelection = computerPlay();
-            let roundResult = playRound(playerChoice, computerSelection);
-            console.log(roundResult);
-            gameScore(roundResult);
-            console.log("Your score is " + playerScore);
-            console.log("The computer's score is " + computerScore);
-
-            if (playerScore === 5 || computerScore === 5) {
-                break;
-            }
-        }
-
-
-        //Keeps score and prints out correct messages based on score
-        function gameScore(result) {
-            
-
-            if (result === playerWinRound) {
-                playerScore++;
-            }
-            else if (result === draw) {
-                draws++;
-            }else {
-                computerScore++;
-            }
-
-
-            if (playerScore === 5) {
-                console.log(playerWin);
-                return;
-            }
-            if (computerScore === 5) {
-                console.log(computerWin);
-                return;
-            }
-        }
-
-    </script>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Rock Paper Scissors (in the console :))</h1>
+    <div class="titles">
+        <h1>Rock, Paper, Scissors</h1>
+        <h2>Make a choice!</h2>
+    </div>
+
+    <div id="game">
+
+        <div class="buttons">
+            <button class="button" id="btnRock" onClick="rockPaperScissors('rock')">Rock</button>
+            <button class="button" id="btnPaper" onClick="rockPaperScissors('paper')">Paper</button>
+            <button class="button" id="btnScissors" onClick="rockPaperScissors('scissors')">Scissors</button>
+
+        </div>
+        <div id="results">
+            <p id="choices"></p>
+            <p id="roundWin"></p>
+            <p id="winLoseOrTie"></p>
+        </div>
+
+        <div id="scores">
+            <p>
+
+                <p id="playerScore">Your score: 0 </p>
+                <p id="computerScore">Computer's score: 0</p>
+
+            </p>
+        
+        <button id="playAgain" onclick="reset()" >Play Again</button>
+
+
+        </div>
+
+        <script>
+            let playerScore = 0;
+            let computerScore = 0;
+
+            //Resets everything for new game
+            function reset() {
+                document.getElementById("winLoseOrTie").innerHTML = "";
+                document.getElementById("roundWin").innerHTML = "";
+                document.getElementById("choices").innerHTML = "";
+               document.getElementById("playerScore").innerHTML = "Your score: 0";
+                document.getElementById("computerScore").innerHTML = "Computer's score: 0"
+               document.getElementById("playAgain").style.visibility = "hidden"
+                playerScore = 0;
+                computerScore = 0;
+            }
+
+            //Hides "play again" button
+            document.getElementById("playAgain").style.visibility="hidden"
+            
+            //Plays one round of RPS
+            function rockPaperScissors(playerChoice) {
+                
+            
+
+                //Randomly selects computer choice
+                let computerSelection = Math.random();
+                let computerChoice = "";
+                if (computerSelection < 0.33) {
+                    computerChoice = "rock";
+                } else if (computerSelection < 0.66) {
+                    computerChoice = "paper";
+                } else {
+                    computerChoice = "scissors";
+                }
+                
+                //Prints choices to gui
+                document.getElementById("choices").innerHTML = "You chose " + playerChoice + "! The computer chose " + computerChoice + "!";
+                //Returns player choice to gui
+                if (playerChoice === computerChoice) {
+                    document.getElementById("roundWin").innerHTML = ""
+                    document.getElementById("winLoseOrTie").innerHTML = "It's a tie!"
+                } else if (playerChoice === "rock" && computerChoice === "scissors") {
+                    playerScore++;
+                    document.getElementById("winLoseOrTie").innerHTML = "";
+                    document.getElementById("roundWin").innerHTML = "You won this round!"
+                    document.getElementById("playerScore").innerHTML = "Your score: " + playerScore;
+
+                } else if (playerChoice === "paper" && computerChoice === "rock") {
+                    playerScore++;
+                    document.getElementById("winLoseOrTie").innerHTML = ""
+                    document.getElementById("roundWin").innerHTML = "You won this round!"
+                    document.getElementById("playerScore").innerHTML = "Your score: " + playerScore;
+
+                } else if (playerChoice === "scissors" && computerChoice === "paper") {
+                    playerScore++;
+                    document.getElementById("winLoseOrTie").innerHTML = ""
+                    document.getElementById("roundWin").innerHTML = "You won this round!"
+                    document.getElementById("playerScore").innerHTML = "Your score: " + playerScore;
+
+
+                } else {
+                    computerScore++;
+                    document.getElementById("winLoseOrTie").innerHTML = ""
+                    document.getElementById("roundWin").innerHTML = "Computer wins this round!"
+                    document.getElementById("computerScore").innerHTML = "Computer's score: " + computerScore;
+                }
+                //For loop that plays multiple rounds
+                for (let i = 0; i < 1000; i++) {
+                    if (playerScore === 5) {
+                        document.getElementById("roundWin").innerHTML = ""
+                        document.getElementById("winLoseOrTie").innerHTML = "You win the game! Congratulations!"
+                        document.getElementById("playAgain").style.visibility = "visible"
+                        break;
+                    } else if (computerScore === 5) {
+                        document.getElementById("roundWin").innerHTML = ""
+                        document.getElementById("winLoseOrTie").innerHTML = "The computer wins the game! Better luck next time."
+                        document.getElementById("playAgain").style.visibility = "visible"
+                        break;
+                    }
+                }
+
+               
+
+            }
+
+        </script>
+
 </body>
 
 </html>
+<!--
+//  let playerChoice = prompt("Rock, paper, or scissors?").toLowerCase();-->
